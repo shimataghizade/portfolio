@@ -1,31 +1,37 @@
-// app/theme.js
+"use client";
 import { createTheme } from "@mui/material/styles";
 
-// رنگ‌ها و فونت‌ها
-const theme = createTheme({
+export const getDesignTokens = (mode) => ({
   palette: {
-    primary: {
-      main: "#1976d2", // آبی استاندارد
-    },
-    secondary: {
-      main: "#f50057", // صورتی
-    },
-    background: {
-      default: "#f5f5f5", // پس‌زمینه روشن
-    },
+    mode,
+    ...(mode === "light"
+      ? {
+          background: {
+            default: "#ffffff",
+            paper: "#fafafa",
+          },
+          text: {
+            primary: "#000000",
+            secondary: "#333333",
+          },
+        }
+      : {
+          background: {
+            default: "#121212",
+            paper: "#1e1e1e",
+          },
+          text: {
+            primary: "#ffffff",
+            secondary: "#cccccc",
+          },
+        }),
   },
+
   typography: {
-    fontFamily: "'Roboto', sans-serif",
-    h3: {
-      fontWeight: 700,
-    },
-    h4: {
-      fontWeight: 600,
-    },
-    h5: {
-      fontWeight: 400,
+    allVariants: {
+      color: mode === "light" ? "#000" : "#fff",
     },
   },
 });
 
-export default theme;
+export const createMyTheme = (mode) => createTheme(getDesignTokens(mode));

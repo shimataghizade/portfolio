@@ -2,18 +2,20 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ThemeProviderClient from "./components/ThemeProviderClient";
-import { Grid } from "@mui/material";
-
+import { Box, Grid } from "@mui/material";
+import ThemeContextProvider from "./context/ThemeContext";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
         <ThemeProviderClient>
-          <Grid id="" container flexDirection="column" height="100%">
+          <ThemeContextProvider>
             <Navbar />
-            <Grid sx={{ flexGrow: 1 }}>{children}</Grid>
+            <Box component="main" sx={{ flexGrow: 1 }}>
+              {children}
+            </Box>
             <Footer />
-          </Grid>
+          </ThemeContextProvider>
         </ThemeProviderClient>
       </body>
     </html>

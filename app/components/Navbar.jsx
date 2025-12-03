@@ -1,4 +1,3 @@
-// components/Navbar.jsx
 "use client";
 
 import React, { useState, useContext } from "react";
@@ -13,6 +12,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemButton,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -29,56 +29,58 @@ const navItems = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { toggleColorMode } = useContext(ColorModeContext);
+  const { toggleColorMode, mode } = useContext(ColorModeContext);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+    <Box sx={{ width: 250, textAlign: "center", mt: 2 }}>
+      <Typography variant="h6" sx={{ mb: 2 }}>
         My Portfolio
       </Typography>
+
       <List>
         {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
-            <ListItemText>
-              <Link href={item.href}>
-                <Button fullWidth>{item.label}</Button>
-              </Link>
-            </ListItemText>
+            <ListItemButton component={Link} href={item.href}>
+              <ListItemText primary={item.label} />
+            </ListItemButton>
           </ListItem>
         ))}
       </List>
+
+      <Box sx={{ mt: 2 }}>
+        <IconButton onClick={toggleColorMode}>
+          {mode === "light" ? <DarkModeIcon /> : <LightModeIcon />}
+        </IconButton>
+      </Box>
     </Box>
   );
 
   return (
     <>
-      <AppBar component="nav" position="sticky" color="primary">
+      <AppBar component="nav" position="sticky" elevation={1}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6" component="div">
-            My Portfolio
-          </Typography>
+          <Typography variant="h6">My Portfolio</Typography>
 
-          <Box
-            sx={{ display: { xs: "none", sm: "flex" }, alignItems: "center" }}
-          >
+          {/* Desktop Menu */}
+          <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 1 }}>
             {navItems.map((item) => (
               <Link key={item.label} href={item.href} passHref>
                 <Button sx={{ color: "#fff" }}>{item.label}</Button>
               </Link>
             ))}
+
             <IconButton color="inherit" onClick={toggleColorMode}>
-              <LightModeIcon />
+              {mode === "light" ? <DarkModeIcon /> : <LightModeIcon />}
             </IconButton>
           </Box>
 
+          {/* Mobile Menu Button */}
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            edge="end"
             sx={{ display: { sm: "none" } }}
             onClick={handleDrawerToggle}
           >
@@ -87,6 +89,7 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
 
+      {/* Drawer for mobile */}
       <Drawer
         anchor="right"
         open={mobileOpen}
