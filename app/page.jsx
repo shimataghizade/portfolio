@@ -1,99 +1,46 @@
 "use client";
 
-import {
-  Container,
-  Typography,
-  Box,
-  Button,
-  Grid,
-  Card,
-  CardContent,
-  Chip,
-} from "@mui/material";
-import { useRouter } from "next/navigation";
+import React from "react";
+import { Container, Typography, Button, Box, Stack } from "@mui/material";
+import Link from "next/link";
 
-export default function Home() {
-  const router = useRouter();
-  const skills = [
-    "HTML",
-    "CSS",
-    "JavaScript (ES6+)",
-    "React.js",
-    "Next.js",
-    "MUI",
-    "Responsive Web Design",
-    "Figma to Responsive Frontend",
-    "Git & Version Control",
-  ];
-
+export default function HomePage() {
   return (
-    <Container sx={{ mt: 8 }}>
-      {/* Hero Section */}
-      <Box sx={{ textAlign: "center", mb: 12 }}>
-        <Typography variant="h3" fontWeight="bold">
-          Hi, I'm Shima 👋
-        </Typography>
-
-        <Typography variant="h5" sx={{ mt: 2, opacity: 0.8 }}>
-          React Front-End Developer — Turning Figma designs into responsive
-          websites, Git workflow experience
-        </Typography>
-
-        <Button
-          variant="contained"
-          size="large"
-          sx={{ mt: 4 }}
-          onClick={() => router.push("/projects")}
-        >
-          View My Projects
-        </Button>
-      </Box>
-
-      {/* Skills Section */}
-      <Typography variant="h4" fontWeight="bold" sx={{ mb: 3 }}>
-        Skills
+    <Container
+      sx={{
+        mt: 12,
+        mb: 12,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
+      <Typography variant="h3" fontWeight="bold" sx={{ mb: 2 }}>
+        Hi, I'm Shima
+      </Typography>
+      <Typography
+        variant="h6"
+        color="text.secondary"
+        sx={{ mb: 4, maxWidth: 600 }}
+      >
+        Front-End Developer with 4 years of experience building modern,
+        responsive web applications using React.js and Next.js. Skilled in state
+        management, form validation, and creating interactive user interfaces.
       </Typography>
 
-      <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb: 10 }}>
-        {skills.map((skill) => (
-          <Chip
-            key={skill}
-            label={skill}
-            color="primary"
-            sx={{ fontSize: "1rem", py: 1 }}
-          />
-        ))}
-      </Box>
-
-      {/* Featured Projects */}
-      <Typography variant="h4" fontWeight="bold" sx={{ mb: 4 }}>
-        Featured Work
-      </Typography>
-
-      <Grid container spacing={4}>
-        {[1, 2, 3].map((i) => (
-          <Grid item xs={12} sm={6} md={4} key={i}>
-            <Card sx={{ height: "100%" }}>
-              <CardContent>
-                <Typography variant="h6">Project {i}</Typography>
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  Brief description of this project...
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-
-      <Box sx={{ textAlign: "center", mt: 6 }}>
-        <Button
-          variant="outlined"
-          size="large"
-          onClick={() => router.push("/projects")}
-        >
-          See All Projects →
-        </Button>
-      </Box>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+        <Link href="/projects" passHref>
+          <Button variant="contained" color="primary">
+            View Projects
+          </Button>
+        </Link>
+        <Link href="/contact" passHref>
+          <Button variant="outlined" color="primary">
+            Contact Me
+          </Button>
+        </Link>
+      </Stack>
     </Container>
   );
 }
